@@ -28,7 +28,7 @@ export default function ChatApp() {
     ws.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
-        if (data.type === "chat") {
+        if (data.type === "chat" && data.sender !== "me") {
           setMessages((prevMessages) => [
             ...prevMessages,
             { sender: data.sender, message: data.message },
@@ -83,7 +83,6 @@ export default function ChatApp() {
       animate={{ opacity: 1 }}
       transition={{ duration: 1.2 }}
     >
-      
       <motion.header
         className="bg-gray-900 p-4 shadow-xl text-center"
         initial={{ y: -50, opacity: 0 }}
@@ -95,7 +94,6 @@ export default function ChatApp() {
         </h1>
       </motion.header>
 
-   
       <motion.main
         className="flex-1 overflow-y-auto p-4 space-y-4"
         initial={{ y: 50, opacity: 0 }}
@@ -114,7 +112,6 @@ export default function ChatApp() {
             animate={{
               scale: 1,
               opacity: 1,
-              
             }}
             transition={{
               duration: 0.5,
@@ -132,7 +129,6 @@ export default function ChatApp() {
         ))}
       </motion.main>
 
-    
       <footer className="bg-gray-900 p-4 flex items-center space-x-3">
         <motion.input
           ref={inputRef}
